@@ -64,17 +64,18 @@ const images = [
 	},
 ]
 
-const gallery = document.querySelector('.gallery')
+const gallery = document.querySelector('.gallery');
+
 
 const galleryItemsList = images
-	.map(item => {
-		const {
-			preview = 'https://flowbite.com/docs/images/examples/image-1@2x.jpg',
-			original = 'https://flowbite.com/docs/images/examples/image-1@2x.jpg',
-			description = 'опис',
-		} = item
-
-		return `<li class="gallery-item">
+    .map(item => {
+        const {
+            preview = 'https://flowbite.com/docs/images/examples/image-1@2x.jpg', 
+            original = 'https://flowbite.com/docs/images/examples/image-1@2x.jpg', 
+            description = 'gallery'
+            } = item;
+        
+        return `<li class="gallery-item">
                     <a class="gallery-link" href= ${original}>
                         <img
                         class="gallery-image"
@@ -84,7 +85,36 @@ const galleryItemsList = images
                         />
                     </a>
                 </li>`
-	})
-	.join('')
+    })
+    .join('');
 
-gallery.insertAdjacentHTML('afterbegin', galleryItemsList)
+gallery.insertAdjacentHTML('afterbegin', galleryItemsList);
+
+
+
+let galleryItem = document.querySelectorAll('.gallery-image');
+galleryItem.forEach((item, index) => {
+    setTimeout(() => {
+        item.classList.add('animation')
+    }, (index + 1) * 300) 
+})
+
+
+
+gallery.addEventListener('click', event => {
+    event.preventDefault();
+    
+    if (event.target.tagName !== 'IMG') return;
+    let largeImageUrl = event.target.getAttribute('data-source');
+    const instance = basicLightbox.create(`<img src="${largeImageUrl}" width="800" height="600">`);
+    instance.show();
+    
+    const hideOnEsc = (event) => {
+        if (event.key === 'Escape') {
+            instance.close();
+            document.removeEventListener('keydown', hideOnEsc);
+        };
+    };
+    
+    document.addEventListener('keydown', hideOnEsc);
+});

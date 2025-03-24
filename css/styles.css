@@ -19,18 +19,18 @@ body {
 	width: 360px;
 	height: 200px;
 	border-radius: 4px;
-	transition: transform 0.3s ease-in-out;
+	transition: transform 0.3s ease-in;
 	opacity: 0;
 }
 
 .animation {
 	opacity: 1;
-	animation: bounceInDown;
-	animation-duration: 2s;
+	animation: bounceIn;
+	animation-duration: 3s;
 }
 
 .gallery-image:hover {
-	transform: scale(1.0444);
+	transform: scale(1.09);
 }
 
 section {
